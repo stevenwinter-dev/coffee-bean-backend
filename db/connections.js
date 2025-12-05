@@ -5,11 +5,19 @@ const mongoURI =
     ? process.env.DB_URL
     : 'mongodb://localhost/coffee-app';
 
+if (process.env.NODE_ENV === 'production' && !process.env.DB_URL) {
+  console.error('❌ DB_URL is not defined in the environment variables!');
+  process.exit(1); // Exit the process if DB_URL is missing in production
+}
+
 mongoose
-  .connect(mongoURI) // Removed unsupported options
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((instance) =>
-    console.log(`Connected to db: ${instance.connections[0].name}`)
+    console.log(`✅ Connected to db: ${instance.connections[0].name}`)
   )
-  .catch((error) => console.log('Connection failed!', error));
+  .catch((error) => {
+    console.error('❌ Connection failed!', error);
+    process.exit(1); // Exit the process if the connection fails
+  });
 
 module.exports = mongoose;
