@@ -19,16 +19,22 @@ require('dotenv').config()
 app.use(methodOverride('_method'))
 app.use(express.json())
 const util = require('util');
-app.use(cors())
-// app.use(
-//   cors({
-//     origin: 'http://localhost:3000',
-//     credentials: true,
-//   })
-// );
 
-// Have Node serve the files for our built Coffee-app
-app.use(express.static(path.resolve(__dirname, '../server/build')));
+const allowedOrigins = [
+  'https://coffee-bean-frontend-production.up.railway.app',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 ///////////////////////////////////////////////////////////////////////////////
 //Stripe payment route
