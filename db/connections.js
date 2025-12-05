@@ -20,4 +20,6 @@ mongoose
     process.exit(1); // Exit the process if the connection fails
   });
 
+  console.log('MongoDB URI:', mongoURI);
+
 module.exports = mongoose;
