@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production' && !process.env.DB_URL) {
 }
 
 mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoURI) // No options needed for Mongoose v6+
   .then((instance) =>
     console.log(`✅ Connected to db: ${instance.connections[0].name}`)
   )
