@@ -33,7 +33,7 @@ Upon successful checkout, the customer has an option to receive a text message r
 - Firebase
 - Stripe API
 - Twilio API
-- Heroku
+- Railway
 - MongoDB Atlas
 
 ## Install Instructions
